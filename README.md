@@ -12,3 +12,11 @@ Once the chosen Goodreads fields have been scraped and supplemented with query d
 Once the raw data is prepared, the derived “description” field will undergo natural language pre-processing to prepare it for analysis. With the end goal being to assist publishers in creating more successful back page blurbs, key words will then be extracted (using Yake) from the marketing heavy bag of words sourced on each identified title. As shown in the figure below, these identified key words will then be subjected to sentiment analysis (using Vader) to provide us with a rounded picture of the types of key words and mix of sentiment used by more successful competitor products. Results from these processes will be compared among the titles with either a high or low comparative rating as indicated by a scaled weighted average of reviews from Goodreads.
 
 ![Imgur Image](https://github.com/cdshing/WebCrawlerNLP/blob/main/T1_Architecture.jpg)
+
+### References:
+
+McGinn, B. (2020). The Importance of a Back Cover Book Design. Bailey Designs Books. https://www.baileydesignsbooks.com/back-cover-design/
+
+vaderSentiment. (2020). PyPI. https://pypi.org/project/vaderSentiment/
+
+yake. (2021). PyPI. https://pypi.org/project/yake/
