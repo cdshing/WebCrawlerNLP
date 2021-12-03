@@ -388,11 +388,3 @@ plt.imshow(wc_com, interpolation="bilinear")
 plt.axis("off")
 plt.savefig('wc_com.png', bbox_inches='tight')
 plt.show()
-
-
-
-
-
-
-
-
