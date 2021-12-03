@@ -327,6 +327,4 @@ sns.boxplot(df.rating_class, df.api_page_count).set(ylim=(0, 3000))
 plt.savefig('class_by_page.png', bbox_inches='tight')
 plt.show()
 
-# create wordcloud of description
-
 
