@@ -24,6 +24,9 @@ from urllib.parse import quote
 from sklearn.preprocessing import minmax_scale
 import matplotlib.pyplot as plt
 import seaborn as sns
+from nltk.tokenize import word_tokenize
+from collections import Counter
+from gensim.parsing.preprocessing import remove_stopwords
 
 
 ##### 2. WebScraping Goodreads
@@ -327,4 +330,48 @@ sns.boxplot(df.rating_class, df.api_page_count).set(ylim=(0, 3000))
 plt.savefig('class_by_page.png', bbox_inches='tight')
 plt.show()
 
+# Create word frequency tables
+def word_frequency(sentence):
+    # joins all the sentences
+    sentence = " ".join(sentence)
+    # creates tokens
+    new_tokens = word_tokenize(sentence)
+    # counts the words
+    counted = Counter(new_tokens)
+    # creates and returns a data frame
+    word_freq = pd.DataFrame(counted.items(),
+                             columns=['word', 'frequency']).sort_values(by='frequency',
+                                                                        ascending=False)
+    return word_freq
 
+# plot the frequencies with stopwords
+wf_Stopwords = word_frequency(df.description)
+plt.figure(figsize=(10, 10))
+sns.barplot(x='frequency', y='word', data=wf_Stopwords.head(30))
+plt.savefig('wf_Stopwords.png', bbox_inches='tight')
+plt.show()
+
+# copy the description field as a new variable
+df['desc_clean'] = df['description']
+
+# lowercase all texts
+def lower_case(text):
+    return str(text).lower()
+df['desc_clean'] = df['desc_clean'].apply(lower_case)
+
+# remove special characters (i.e., non-alphanumeric)
+def irrelevant_characters(text):
+    return re.sub('[^A-Za-z0-9 ]+', ' ', text)
+df['desc_clean'] = df['desc_clean'].apply(irrelevant_characters)
+
+# remove Stopwords
+def clean_stopwords(text):
+    return remove_stopwords(text)
+df['desc_clean'] = df['desc_clean'].apply(clean_stopwords)
+
+# plot the frequencies without stopwords
+wf_NoStopwords = word_frequency(df.desc_clean)
+plt.figure(figsize=(10, 10))
+sns.barplot(x='frequency', y='word', data=wf_NoStopwords.head(30))
+plt.savefig('wf_NoStopwords.png', bbox_inches='tight')
+plt.show()
